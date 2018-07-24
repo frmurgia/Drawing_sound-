@@ -56,6 +56,7 @@ function Particle(x, y, level) {
 
 
 function setup() {
+  frameRate(60)
   reverb = new p5.Reverb();
   filter = new p5.LowPass();
   env = new p5.Env();
@@ -170,7 +171,7 @@ window.addEventListener('load', function(){ // on page load
     document.body.addEventListener('touchmove', function(e){
       envAttack();
 
-      allParticles.push(new Particle(mouseX, mouseY, maxLevel));
+      allParticles.push(new Particle(e.changedTouches[0].pageX, e.changedTouches[0].pageY, maxLevel));
 
       console.log("move Y:" +e.changedTouches[0].pageY) // alert pageX coordinate of touch point
 
