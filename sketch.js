@@ -7,15 +7,15 @@ Inspired by:
 
 var freq = [261.63, 293.66, 329.63, 392.00, 440.00, 493.88]
 
-var filter, filterFreq, filterRes, reverb;;
+var filter1, filterFreq, filterRes, reverb;;
 
 var attackLevel = 0.6;
 var releaseLevel = 0;
 
 var attackTime = 0.1
 var decayTime = 0.9;
-var susPercent = 0.6;
-var releaseTime = 1.1;
+var susPercent = 0.2;
+var releaseTime = 1.2;
 
 var env, triOsc;
 
@@ -58,10 +58,13 @@ function Particle(x, y, level) {
 function setup() {
   frameRate(80)
   reverb = new p5.Reverb();
-  filter = new p5.LowPass();
+  filter1 = new p5.LowPass();
   env = new p5.Env();
+  env1 = new p5.Env();
   env.setADSR(attackTime, decayTime, susPercent, releaseTime);
   env.setRange(attackLevel, releaseLevel);
+  env1.setADSR(attackTime, decayTime, susPercent, releaseTime);
+  env1.setRange(attackLevel, releaseLevel);
 
   triOsc = new p5.Oscillator('sine');
   triOsc.amp(env);
@@ -71,7 +74,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   // triOsc.disconnect();
   reverb.process(triOsc, 4, 3);
-  reverb.connect(filter);
+  reverb.connect(filter1);
   colorMode(HSB, 360);
 
   textAlign(CENTER);
@@ -89,17 +92,17 @@ function draw() {
   filterRes = (10);
 
   // set filter parameters
-  filter.set(filterFreq, filterRes);
+  filter1.set(filterFreq, filterRes);
   // Create fade effect.
   noStroke();
   fill(360, 30);
   rect(0, 0, width, height);
   // Move and spawn particles.
   // Remove any that is below the velocity threshold.
-  for (var i = allParticles.length - 1; i > -1; i--) {
+  for (var i = allParticles.length - 1 ; i > -1; i--) {
     allParticles[i].move();
 
-    if (allParticles[i].vel.mag() < 0.9) {
+    if (allParticles[i].vel.mag() < 0.3) {
       allParticles.splice(i, 1);
     }
   }
@@ -120,7 +123,7 @@ function draw() {
       var p3 = allParticles[data[i + 2]];
 
       // Don't draw triangle if its area is too big.
-      var distThresh = 75;
+      var distThresh = 175;
 
       if (dist(p1.pos.x, p1.pos.y, p2.pos.x, p2.pos.y) > distThresh) {
         continue;
@@ -137,8 +140,8 @@ function draw() {
       // Base its hue by the particle's life.
 
       noStroke();
-      fill(165 + p1.life * 1.5, 360, 360);
-
+      // fill(165 + p1.life * 1.5, 360, random(360));
+  fill(165 + p1.life * 1.5, 360, 360);
 
       triangle(p1.pos.x, p1.pos.y,
         p2.pos.x, p2.pos.y,
@@ -155,6 +158,7 @@ function draw() {
 
 function mouseReleased() {
   env.triggerRelease();
+
 }
 
 function envAttack() {
@@ -165,71 +169,67 @@ function envAttack() {
 
 
 var nota_attuale = freq[1];
+//
+// window.addEventListener('load', function(){ // on page load
+//
+//     document.body.addEventListener('touchmove', function(e){
+//       // envAttack();
+//
+//       allParticles.push(new Particle(e.changedTouches[0].pageX, e.changedTouches[0].pageY, maxLevel));
+//
+//       // console.log("move Y:" +e.changedTouches[0].pageY) // alert pageX coordinate of touch point
+//
+//
+//
+//
+//     },
+//     false)
+//
+//
+// }, false);
+//
 
-window.addEventListener('load', function(){ // on page load
-
-    document.body.addEventListener('touchmove', function(e){
-      envAttack();
-
-      allParticles.push(new Particle(e.changedTouches[0].pageX, e.changedTouches[0].pageY, maxLevel));
-
-      console.log("move Y:" +e.changedTouches[0].pageY) // alert pageX coordinate of touch point
-
-
-
-
-    },
-    false)
-
-
-}, false);
-
-
 
 //
 //
 //
-// function mouseDragged() {
-//   masterVolume(map(mouseX,0,windowWidth,0,0.3) );
-//
-//   envAttack();
-//   //
-//     allParticles.push(new Particle(mouseX, mouseY, maxLevel));
-//   // griglia()
-//   if (mouseY > 0 && mouseY < (windowHeight / 2) / 2) {
-//     // console.log("Soglia 1")
-//
-//
-//
-//     // nota_attuale++
-//     triOsc.freq(nota_attuale)
-//   }
-//   if (mouseY > (windowHeight / 3) && mouseY < (windowHeight / 2)) {
-//     // console.log("Soglia 2")
-//
-//
-//     triOsc.freq(freq[2])
-//   }
-//   if (mouseY > (windowHeight / 2) && mouseY < windowHeight / 6 + (windowHeight / 2)) {
-//     // console.log("Soglia 3")
-//
-//
-//     triOsc.freq(freq[3])
-//
-//   }
-//   if (mouseY > windowHeight / 6 + (windowHeight / 2) && mouseY < (windowHeight + (windowHeight / 2)) / 2) {
-//     // console.log("Soglia 4")
-//
-//
-//     triOsc.freq(freq[4])
-//
-//   }
-//   if (mouseY > (windowHeight + (windowHeight / 2)) / 2 && mouseY < windowHeight / 3 + (windowHeight + 2)) {
-//     // console.log("Soglia 5")
-//
-//
-//     triOsc.freq(freq[5])
-//
-//   }
+function mouseDragged() {
+masterVolume(map(mouseX,0,windowWidth,0.1,0.5))
+  envAttack();
+  //
+    allParticles.push(new Particle(mouseX, mouseY, maxLevel));
+  // griglia()
+  if (mouseY > 0 && mouseY < (windowHeight / 2) / 2) {
+    // console.log("Soglia 1")
+
+  triOsc.freq(freq[1])
+
+    // nota_attuale++
+    // triOsc.freq(nota_attuale)
+
+  }
+  if (mouseY > (windowHeight / 3) && mouseY < (windowHeight / 2)) {
+    // console.log("Soglia 2")
+
+    triOsc.freq(freq[2])
+  }
+  if (mouseY > (windowHeight / 2) && mouseY < windowHeight / 6 + (windowHeight / 2)) {
+    // console.log("Soglia 3")
+
+    triOsc.freq(freq[3])
+
+  }
+  if (mouseY > windowHeight / 6 + (windowHeight / 2) && mouseY < (windowHeight + (windowHeight / 2)) / 2) {
+    // console.log("Soglia 4")
+
+    triOsc.freq(freq[4])
+
+  }
+  if (mouseY > (windowHeight + (windowHeight / 2)) / 2 && mouseY < windowHeight / 3 + (windowHeight + 2)) {
+    // console.log("Soglia 5")
+
+     triOsc.freq(freq[5])
+
+  }
   // masterVolume(0.1)
-//}
+}
