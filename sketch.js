@@ -5,9 +5,13 @@ Inspired by:
 	Makio135's sketch www.openprocessing.org/sketch/385808
  */
 
+
 var freq = [261.63, 293.66, 329.63, 392.00, 440.00, 493.88]
 
 var filter1, filterFreq, filterRes, reverb;;
+
+var  delay;
+
 
 var attackLevel = 0.6;
 var releaseLevel = 0;
@@ -56,25 +60,33 @@ function Particle(x, y, level) {
 
 
 function setup() {
+ //
+ delay = new p5.Delay();
+
+
+
+
   frameRate(80)
   reverb = new p5.Reverb();
   filter1 = new p5.LowPass();
   env = new p5.Env();
-  env1 = new p5.Env();
+  triOsc = new p5.Oscillator('sine');
+
   env.setADSR(attackTime, decayTime, susPercent, releaseTime);
   env.setRange(attackLevel, releaseLevel);
-  env1.setADSR(attackTime, decayTime, susPercent, releaseTime);
-  env1.setRange(attackLevel, releaseLevel);
 
-  triOsc = new p5.Oscillator('sine');
   triOsc.amp(env);
   triOsc.start();
-  // triOsc.disconnect();
+  delay.process(reverb, .12, .7, 2300);
 
-  createCanvas(windowWidth, windowHeight);
-  // triOsc.disconnect();
+  delay.setType('pingPong'); // a stereo effect
   reverb.process(triOsc, 4, 3);
   reverb.connect(filter1);
+
+
+   delay.connect(filter1);
+
+    var myCanvas=createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360);
 
   textAlign(CENTER);
@@ -84,6 +96,21 @@ function setup() {
 
 
 function draw() {
+
+
+  gyro.startTracking(function(o) {
+
+  // console.log( "beta "+o.beta + "gamma " + o.gamma );
+  // console.log(o.beta)
+
+   masterVolume(map(o.beta,0,-30,0,0.8));
+   // masterVolume(map(o.gamma,-30,18,0,0.9));
+   delay.process(reverb, map(o.gamma,-60,30,0.,0.8),map(o.gamma,-60,30,0.,0.8), 2300);
+// console.log(map(o.gamma,-50,30,0.,0.56))
+ });
+
+
+
 
   // frequency (150Hz) to the highest (15050) that humans can hear
   filterFreq = map(mouseX, 0, windowWidth, 150, 10050);
@@ -194,13 +221,18 @@ var nota_attuale = freq[1];
 //
 //
 function mouseDragged() {
-masterVolume(map(mouseX,0,windowWidth,0.1,0.5))
+
+
+
+
+// masterVolume(map(mouseX,0,windowWidth,0.1,0.5))
   envAttack();
   //
     allParticles.push(new Particle(mouseX, mouseY, maxLevel));
   // griglia()
   if (mouseY > 0 && mouseY < (windowHeight / 2) / 2) {
     // console.log("Soglia 1")
+
 
   triOsc.freq(freq[1])
 
