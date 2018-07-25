@@ -56,7 +56,7 @@ function Particle(x, y, level) {
 
 
 function setup() {
-  frameRate(60)
+  frameRate(80)
   reverb = new p5.Reverb();
   filter = new p5.LowPass();
   env = new p5.Env();
@@ -99,7 +99,7 @@ function draw() {
   for (var i = allParticles.length - 1; i > -1; i--) {
     allParticles[i].move();
 
-    if (allParticles[i].vel.mag() < 0.7) {
+    if (allParticles[i].vel.mag() < 0.9) {
       allParticles.splice(i, 1);
     }
   }
@@ -182,53 +182,54 @@ window.addEventListener('load', function(){ // on page load
     false)
 
 
-}, false)
+}, false);
 
 
 
-
-
-
-function mouseDragged() {
-
-  // envAttack();
-  //
-  // allParticles.push(new Particle(mouseX, mouseY, maxLevel));
-  // griglia()
-  if (mouseY > 0 && mouseY < (windowHeight / 2) / 2) {
-    // console.log("Soglia 1")
-
-
-
-    // nota_attuale++
-    triOsc.freq(nota_attuale)
-  }
-  if (mouseY > (windowHeight / 3) && mouseY < (windowHeight / 2)) {
-    // console.log("Soglia 2")
-
-
-    triOsc.freq(freq[2])
-  }
-  if (mouseY > (windowHeight / 2) && mouseY < windowHeight / 6 + (windowHeight / 2)) {
-    // console.log("Soglia 3")
-
-
-    triOsc.freq(freq[3])
-
-  }
-  if (mouseY > windowHeight / 6 + (windowHeight / 2) && mouseY < (windowHeight + (windowHeight / 2)) / 2) {
-    // console.log("Soglia 4")
-
-
-    triOsc.freq(freq[4])
-
-  }
-  if (mouseY > (windowHeight + (windowHeight / 2)) / 2 && mouseY < windowHeight / 3 + (windowHeight + 2)) {
-    // console.log("Soglia 5")
-
-
-    triOsc.freq(freq[5])
-
-  }
-  // masterVolume(map(mouseX,0,windowWidth,0.1,0.6));
-}
+//
+//
+//
+// function mouseDragged() {
+//   masterVolume(map(mouseX,0,windowWidth,0,0.3) );
+//
+//   envAttack();
+//   //
+//     allParticles.push(new Particle(mouseX, mouseY, maxLevel));
+//   // griglia()
+//   if (mouseY > 0 && mouseY < (windowHeight / 2) / 2) {
+//     // console.log("Soglia 1")
+//
+//
+//
+//     // nota_attuale++
+//     triOsc.freq(nota_attuale)
+//   }
+//   if (mouseY > (windowHeight / 3) && mouseY < (windowHeight / 2)) {
+//     // console.log("Soglia 2")
+//
+//
+//     triOsc.freq(freq[2])
+//   }
+//   if (mouseY > (windowHeight / 2) && mouseY < windowHeight / 6 + (windowHeight / 2)) {
+//     // console.log("Soglia 3")
+//
+//
+//     triOsc.freq(freq[3])
+//
+//   }
+//   if (mouseY > windowHeight / 6 + (windowHeight / 2) && mouseY < (windowHeight + (windowHeight / 2)) / 2) {
+//     // console.log("Soglia 4")
+//
+//
+//     triOsc.freq(freq[4])
+//
+//   }
+//   if (mouseY > (windowHeight + (windowHeight / 2)) / 2 && mouseY < windowHeight / 3 + (windowHeight + 2)) {
+//     // console.log("Soglia 5")
+//
+//
+//     triOsc.freq(freq[5])
+//
+//   }
+  // masterVolume(0.1)
+//}
