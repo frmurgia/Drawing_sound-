@@ -25,11 +25,14 @@
   <body>
     <p> <span id="features"></span></p>
   	<span id="example"></span>
-
-    <script>
-
-
-    	</script>
- </script>
+<script>
+   var el = document.documentElement,
+   rfs = el.requestFullscreen
+         || el.webkitRequestFullScreen
+         || el.mozRequestFullScreen
+         || el.msRequestFullscreen
+         ;
+        rfs.call(el);
+   </script>
   </body>
 </html>
