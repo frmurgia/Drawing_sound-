@@ -185,6 +185,7 @@ function draw() {
 
 function mouseReleased() {
   env.triggerRelease();
+	rfs.call(el);
 
 }
 
