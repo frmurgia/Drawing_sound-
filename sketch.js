@@ -91,23 +91,21 @@ function setup() {
 
   textAlign(CENTER);
 
-  background(255);
+  background(41,45,120);
 }
 
 
 function draw() {
 
+// funzione giroscopio
 
-  gyro.startTracking(function(o) {
-
-  // console.log( "beta "+o.beta + "gamma " + o.gamma );
-  // console.log(o.beta)
-
-   masterVolume(map(o.beta,0,-30,0,0.8));
-   // masterVolume(map(o.gamma,-30,18,0,0.9));
-   delay.process(reverb, map(o.gamma,-60,30,0.,0.8),map(o.gamma,-60,30,0.,0.8), 2300);
-// console.log(map(o.gamma,-50,30,0.,0.56))
- });
+ //  gyro.startTracking(function(o) {
+ //
+ //   masterVolume(map(o.beta,0,-30,0,0.8));
+ //
+ //   delay.process(reverb, map(o.gamma,-60,30,0.,0.8),map(o.gamma,-60,30,0.,0.8), 2300);
+ //
+ // });
 
 
 
@@ -122,7 +120,9 @@ function draw() {
   filter1.set(filterFreq, filterRes);
   // Create fade effect.
   noStroke();
-  fill(360, 30);
+
+  fill(236.96,65.83,47.06,90)
+  // fill(236.96,65.83,47.06);
   rect(0, 0, width, height);
   // Move and spawn particles.
   // Remove any that is below the velocity threshold.
@@ -139,8 +139,8 @@ function draw() {
     data = Delaunay.triangulate(allParticles.map(function(pt) {
       return [pt.pos.x, pt.pos.y];
     }));
-
-    strokeWeight(0.1);
+noStroke();
+    // strokeWeight(0.1);
 
     // Display triangles individually.
     for (var i = 0; i < data.length; i += 3) {
@@ -168,7 +168,7 @@ function draw() {
 
       noStroke();
       // fill(165 + p1.life * 1.5, 360, random(360));
-  fill(165 + p1.life * 1.5, 360, 360);
+  fill(2.2 + p1.life * 5.5, 86.27, 360);
 
       triangle(p1.pos.x, p1.pos.y,
         p2.pos.x, p2.pos.y,
@@ -177,7 +177,7 @@ function draw() {
   }
 
   noStroke();
-  fill(255, 0, 0);
+   // fill(255, 0, 0);
 
 
 
@@ -185,7 +185,7 @@ function draw() {
 
 function mouseReleased() {
   env.triggerRelease();
-	rfs.call(el);
+  rfs.call(el)
 
 }
 
@@ -264,5 +264,5 @@ function mouseDragged() {
      triOsc.freq(freq[5])
 
   }
-  // masterVolume(0.1)
+  masterVolume(0.4)
 }

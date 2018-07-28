@@ -7,7 +7,7 @@
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
     <style> body {padding: 0; margin: 0;} </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
-    <script src="gyro.min.js"></script>
+    <script src="js/gyro.min.js"></script>
  <script src="p5.dom.js"></script>
   <script src="js/dela.js"></script>
 
@@ -17,7 +17,24 @@
     <script src="sketch.js"></script>
 
 
-<style> body{padding:0; margin:0;} </style>
+<style> body{padding:0; margin:0;}
+@media all and (min-width: 36em){
+	.main { float: left; width:60%; }
+	.sidebar { float: left; width:40%; }
+}
+
+/* Second breakpoint at 800px */
+/* Adjusts column proportions, tweaks base H1 */
+@media all and (min-width: 50em){
+	.main { width:70%; }
+	.sidebar { width:30%; }
+
+	/* You can also tweak any other styles in a breakpoint */
+	H1 { color: blue; font-size:1.2em }
+}
+
+
+ </style>
 
 
 
@@ -25,7 +42,8 @@
   <body>
     <p> <span id="features"></span></p>
   	<span id="example"></span>
-<script>
+
+    <script>
    var el = document.documentElement,
    rfs = el.requestFullscreen
          || el.webkitRequestFullScreen
