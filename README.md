@@ -1,6 +1,6 @@
 # Triangular theremin
 
-
+written in [P5](https://p5js.org/) by frmurgia © 2018-19 MIT License.
 
 
 
