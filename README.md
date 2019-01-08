@@ -1,5 +1,7 @@
-# Drawing_sound-
-Drawing_sound 
+# Triangular theremin
+
+
+
 
 
 ## [LAUNCH/OPEN](https://electricdream.dinamicamiko.com/project/)
