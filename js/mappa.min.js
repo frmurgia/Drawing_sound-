@@ -2,7 +2,7 @@
 
 
 /*
-Orginally from https://cdn.rawgit.com/ironwallaby/delaunay/master/delaunay.js
+Orginally from https://cdn.jsdelivr.net/gh/ironwallaby/delaunay/delaunay.js
 Tweaked it so instead of raising an error it would return an empty list.
 */
 
